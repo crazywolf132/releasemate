@@ -1,32 +1,11 @@
 module.exports = {
-    owner: "NAB-X",
-    repo: "x-bundle-native",
+    owner: "crazywolf132",
+    repo: "releasemate",
     github: "https://github.com/",
 
-    rules: {
-
-        "*": {
-            npm: {
-                noRelease: ["ExampleBook"]
-            },
-            github: {
-                noRelease: ["ExampleBook"]
-            },
-            versionRules: {
-                "ExampleBook": {
-                    copyFrom: "nui-components"
-                }
-            }
-        },
-
-        nightly: {
-            storage: "package.json",
-            resetOnRelease: true,
-        },
-    },
+    rules: {},
 
     versionFormats: {
-        "nightly": "{major}.{minor}.{patch}-nightly.{incremental}",
         "prod": "{major}.{minor}.{patch}",
         "pr": "{major}.{minor}.{patch}-pr.{pr}",
     }
