@@ -46,7 +46,7 @@
     "glob": "^10.3.3",
     "http-proxy-agent": "^7.0.0",
     "https-proxy-agent": "^7.0.1",
-    "p-retry": "^6.0.0",
+    "p-retry": "4.6.2",
     "semver": "^7.5.4"
   }
 }
