@@ -100,4 +100,31 @@ export class GithubAPI {
             body: `Whats changed:\n${changelog}`
         })
     }
+
+    public async deletePreviousCIComments(prNumber: number, sharedInformation: SharedInformation) {
+        const foundComments = (await this.github!.rest.issues.listComments({
+            owner: sharedInformation.owner,
+            repo: sharedInformation.repo,
+            issue_number: prNumber
+        })).data
+
+        const ciComments = foundComments.filter((comment: any) => comment.user.login === sharedInformation.releaseConfig.ciBotName);
+
+        for (const comment of ciComments) {
+            await this.github!.rest.issues.deleteComment({
+                owner: sharedInformation.owner,
+                repo: sharedInformation.repo,
+                comment_id: comment.id
+            })
+        }
+    }
+
+    public async createComment(comment: string, prNumber: number, sharedInformation: SharedInformation) {
+        await this.github!.rest.issues.createComment({
+            owner: sharedInformation.owner,
+            repo: sharedInformation.repo,
+            issue_number: prNumber,
+            body: comment
+        })
+    }
 }

@@ -67,6 +67,12 @@ export type Config = {
     /** Github URL to use */
     github: string;
 
+    /** Github bot username */
+    ciBotName: string;
+
+    /** Name of the base git branch */
+    baseBranchName: string;
+
     /** System rules */
     rules: {
         "*": globalRules;
@@ -79,6 +85,10 @@ export type Config = {
 
     versionFormats: {
         [key: string]: string;
+    }
+
+    githubComments: {
+        [key: string]: ((pkgs: Package[]) => string) | string;
     }
 }
 
