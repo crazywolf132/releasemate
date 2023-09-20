@@ -1,6 +1,6 @@
 {
   "name": "releasemate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Release Mate is a tool to help you manage your releases.",
   "main": "dist/index.js",
   "bin": {
