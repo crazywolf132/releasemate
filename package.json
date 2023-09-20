@@ -1,8 +1,14 @@
 {
   "name": "releasemate",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.1",
+  "description": "Release Mate is a tool to help you manage your releases.",
+  "main": "dist/index.js",
+  "bin": {
+    "releasemate": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "jest",
     "dev": "tsup --watch",
