@@ -1,7 +1,7 @@
 import { Package } from '@core';
 import type { Step } from '@types';
 import { ep, logger } from '@utils';
-import { globSync } from 'glob';
+import { globbySync as globSync } from 'globby';
 
 const log = logger('FIND_PACKAGES');
 
