@@ -13,6 +13,10 @@ export default {
             const git = new Git(sharedInformation.githubUrl);
 
             // Create tag
+            if (sharedInformation.dryRun) {
+                log(`Skipping tag creation, this is a dry run`);
+                continue;
+            }
             git.createTag(`${pkg.name}-${pkg.newVersion}`, `release(${pkg.name}): ${pkg.newVersion}`);
         }
 

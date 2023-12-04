@@ -8,11 +8,11 @@ export class Git {
     }
 
     // Login to git repo
-    login(username: string, email: string, password: string): void {
+    login(username: string, email: string): void {
         // Setting username and email as global config
         this.runGitCommand(`config --global user.name "${username}"`);
         this.runGitCommand(`config --global user.email "${email}"`);
-        this.runGitCommand(`config --global user.password "${password}"`);
+        // this.runGitCommand(`config --global user.password "${password}"`);
     }
 
     // Create a new git tag

@@ -10,6 +10,7 @@ export default {
 
         if (sharedInformation.dryRun) {
             log(`Skipping PR comments, this a dry run`);
+            return;
         }
 
         const isMasterBranch: boolean = String(process.env.BRANCH_NAME).toLowerCase() === sharedInformation.releaseConfig.baseBranchName ?? "main";
