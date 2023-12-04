@@ -40,7 +40,7 @@
     "commander": "^11.0.0",
     "conventional-commits-parser": "^5.0.0",
     "fs-extra": "^11.1.1",
-    "globby": "^13.1.2",
+    "globby": "^11.1.0",
     "http-proxy-agent": "^7.0.0",
     "https-proxy-agent": "^7.0.1",
     "p-retry": "4.6.2",
