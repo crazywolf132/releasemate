@@ -1,5 +1,5 @@
-import type { SharedInformation, Step } from '@types'
-import { logger } from '@utils'
+import type { SharedInformation, Step } from '@types';
+import { logger } from '@utils';
 
 const log = logger("VERSION_RULES");
 
@@ -8,7 +8,7 @@ export default {
     description: 'Performs version rules on the packages',
     run: async (sharedInformation: SharedInformation) => {
         log(`Looking for package version rules`);
-        const rules = sharedInformation.releaseConfig.rules;
+        const rules = sharedInformation.releaseConfig.rules ?? {};
         const global = rules["*"] ?? {};
         const local = rules[sharedInformation.releaseType] ?? {};
 

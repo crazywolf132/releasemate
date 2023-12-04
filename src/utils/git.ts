@@ -68,10 +68,9 @@ export class Git {
 
     private runGitCommand(command: string): string {
         try {
-            return execSync(`git -C ${this.repoPath} ${command}`, { encoding: 'utf8' }).trim();
+            return execSync(`git ${command}`, { encoding: 'utf8' }).trim();
         } catch (error: unknown) {
             throw new Error(`Git command failed: ${command}\n${(error as Error).message}`);
         }
-        return '';
     }
 }
