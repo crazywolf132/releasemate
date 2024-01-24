@@ -3,9 +3,7 @@
   "version": "1.0.7",
   "description": "Release Mate is a tool to help you manage your releases.",
   "main": "dist/index.js",
-  "bin": {
-    "releasemate": "dist/index.js"
-  },
+  "bin": "dist/index.js",
   "files": [
     "dist"
   ],
@@ -44,6 +42,7 @@
     "http-proxy-agent": "^7.0.0",
     "https-proxy-agent": "^7.0.1",
     "p-retry": "4.6.2",
-    "semver": "^7.5.4"
+    "semver": "^7.5.4",
+    "volog": "^1.1.0"
   }
 }
