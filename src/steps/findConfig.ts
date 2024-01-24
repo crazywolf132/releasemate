@@ -1,16 +1,17 @@
 import type { Step } from "@types";
-import { ep, logger } from "@utils";
+import { ep } from "@utils";
 import { existsSync } from "fs-extra";
+import log from 'volog';
 import { readConfig } from "../utils/readConfig";
-
-const log = logger('FIND_CONFIG');
 
 export default {
     name: 'FIND_CONFIG',
     description: "Finds the config file for the release system",
     run: async (sharedInformation) => {
 
-        log('Finding the config file for the release system');
+        log.settings.scope = 'FIND_CONFIG'
+
+        log.info('Finding the config file for the release system');
         // We are going to check to see if we are running in the root of a mono repo.
         // We will check to see if there is a package.json above us. If there is, we will check to see if it has a workspaces property.
         // If it does, we will set the monoRepoRoot to the current directory, and the monoRepoPackages to the workspaces property.
@@ -33,6 +34,7 @@ export default {
                 sharedInformation.monoRepoRoot = ep('..');
                 sharedInformation.monoRepoPackages = [];
             }
+            log.info("Found mono repo", "monoRepoRoot", sharedInformation.monoRepoRoot, "monoRepoPackages", sharedInformation.monoRepoPackages)
         } else {
             // There is no package.json above us.
             sharedInformation.isMonoRepo = false;
@@ -51,6 +53,7 @@ export default {
                 }
             } else {
                 // We need to throw an error... We cannot find where the package.json is
+                log.error(`Cannot find package.json`, 'path', ep('package.json'));
                 return false
             }
         }

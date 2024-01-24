@@ -2,11 +2,9 @@
  * Used to make a changelog from a set of commit messages.
  */
 
-import { Package, SharedInformation } from "@types"
-import { Git } from "./git";
-import { ep } from "./easyPath";
-import { absolutePath } from "./absolutePath";
+import { Package, SharedInformation } from "@types";
 import { execSync } from "child_process";
+import { Git } from "./git";
 
 const emojis: Record<string, string> = {
     feat: '🚀',

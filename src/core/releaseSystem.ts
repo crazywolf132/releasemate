@@ -1,12 +1,14 @@
-import { logger } from '@utils';
-import type { SharedInformation, Step } from '@types'
+
+import Steps from '@steps';
+import type { SharedInformation, Step } from '@types';
+import log from 'volog';
 import { SharedInformationImpl } from './sharedInformation';
-import Steps from '@steps'
+
 
 /**
  * Creating a logger to be used by the CORE system
- */
-const log = logger('CORE');
+*/
+log.settings.scope = 'CORE'
 
 /**
  * This system will be used to loop through all the different steps
@@ -39,16 +41,14 @@ export class ReleaseMate {
     }
 
     public async run() {
-        log('Starting the release process');
+        log.info('Starting the release process');
 
         for (const step of this.steps) {
-            const stepLogger = logger(step.name);
-            let overallLogger = stepLogger(`Starting step...`);
+            log.settings.scope = step.name;
+            log.info(`Starting step`, `stepName`, step.name);
             try {
-                const result = await step.run(this.sharedInformation);
-                // overallLogger(result);
+                await step.run(this.sharedInformation);
             } catch (e) {
-                // overallLogger(false);
                 console.log(e)
                 throw new Error(`Step ${step.name} failed`, { "cause": 'Please refer to the docs' });
             }

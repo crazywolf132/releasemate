@@ -1,15 +1,17 @@
 import type { SharedInformation, Step } from '@types';
-import { logger, Git } from '@utils';
-
-const log = logger('GIT_PUSH');
+import { Git } from '@utils';
+import log from 'volog';
 
 export default {
     name: 'GIT_PUSH',
     description: 'Pushes the changes to the remote repository',
     run: async (sharedInformation: SharedInformation) => {
-        log(`Pushing changes to ${sharedInformation.githubUrl}`);
+
+        log.settings.scope = 'GIT_PUSH'
+
+        log.info(`Pushing changes`, 'githubUrl', sharedInformation.githubUrl);
         if (sharedInformation.dryRun) {
-            log(` -- DRY RUN: Would have pushed changes to ${sharedInformation.githubUrl}`)
+            log.debug(` -- DRY RUN: Would have pushed changes`, `githubUrl`, sharedInformation.githubUrl)
             return true;
         }
         new Git(sharedInformation.monoRepoRoot).push();

@@ -1,17 +1,18 @@
 import type { Step } from '@types';
-import { logger, ep, Git, absolutePath } from '@utils';
-
-const log = logger('READ_COMMITS');
+import { Git, absolutePath, ep } from '@utils';
+import log from 'volog';
 
 export default {
     name: "READ_COMMITS",
     description: "Reads the commits from the git log",
     run: async (sharedInformation) => {
 
+        log.settings.scope = 'READ_COMMITS'
+
         const git = new Git(ep(sharedInformation.monoRepoRoot));
 
         // We will get all the commits and group them by package.
-        log('Reading the commits from the git log');
+        log.info('Reading the commits from the git log');
 
         // console.log(sharedInformation.packages)
 

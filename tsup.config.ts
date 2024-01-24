@@ -7,9 +7,10 @@ export default defineConfig({
     clean: true,
     outDir: './dist',
     target: 'es2015',
-    minify: true,
-    minifyIdentifiers: true,
-    minifySyntax: true,
-    minifyWhitespace: true,
+    // minify: true,
+    noExternal: ['volog'],
+    // minifyIdentifiers: true,
+    // minifySyntax: true,
+    // minifyWhitespace: true,
     replaceNodeEnv: true
 })

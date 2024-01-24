@@ -1,5 +1,6 @@
 import type { Dict, Package as PackageType } from "@types";
 import { ep } from '@utils';
+import log from 'volog';
 
 export class Package implements PackageType {
     public name: string;
@@ -20,7 +21,7 @@ export class Package implements PackageType {
     private peerDependencies: Dict<string> = {};
     private dependencies: Dict<string> = {};
 
-    constructor(pkgJsonPath: string, logger: (message: string) => void) {
+    constructor(pkgJsonPath: string, logger: typeof log) {
 
         this.path = pkgJsonPath.split('/').slice(0, -1).join('/');
 
@@ -32,7 +33,7 @@ export class Package implements PackageType {
         this.name = this.packageJson.name;
 
         // We only use the logger once.
-        logger(`Found package: ${this.name}`);
+        logger.info(`Found package`, 'name', this.name, 'version', this.version);
         this.fetchDependencies();
     }
 

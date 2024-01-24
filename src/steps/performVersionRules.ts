@@ -1,35 +1,36 @@
 import type { SharedInformation, Step } from '@types';
-import { logger } from '@utils';
-
-const log = logger("VERSION_RULES");
+import log from 'volog';
 
 export default {
     name: "VERSION_RULES",
     description: 'Performs version rules on the packages',
     run: async (sharedInformation: SharedInformation) => {
-        log(`Looking for package version rules`);
+
+        log.settings.scope = 'VERSION_RULES'
+
+        log.info(`Looking for package version rules`);
         const rules = sharedInformation.releaseConfig.rules ?? {};
         const global = rules["*"] ?? {};
         const local = rules[sharedInformation.releaseType] ?? {};
 
         for (const pkg of Object.values(sharedInformation.packages)) {
             if ("versionRules" in global || "versionRules" in local) {
-                log(`Found rules for ${pkg.name}`);
+                log.info(`Found rules for package`, `packageName`, pkg.name);
             } else {
                 continue;
             }
 
             const packageRules = global.versionRules[pkg.name] ?? local.versionRules[pkg.name];
             if (packageRules.copyFrom) {
-                log(`${pkg.name} has a copy version rule. Copying from ${packageRules.copyFrom}`);
+                log.info(`Copy version rule found`, `packageName`, pkg.name, `copyFrom`, packageRules.copyFrom)
                 const theirPackage = sharedInformation.packages[packageRules.copyFrom];
                 // Copying their version to replace ours
                 pkg.newVersion = theirPackage.newVersion;
-                log(`${pkg.name}'s new version is ${theirPackage.newVersion}`);
+                log.info(`Copied version`, `packageName`, pkg.name, `newVersion`, pkg.newVersion);
             } else if (packageRules.logic != null) {
-                log(`${pkg.name} logic has been provided to calculate new version.`);
+                log.info(`Logic version rule found`, `packageName`, pkg.name)
                 const newVersion = packageRules?.logic?.(pkg);
-                log(`${pkg.name}'s new version is ${newVersion}`);
+                log.info(`Calculated new version`, `packageName`, pkg.name, `newVersion`, newVersion);
                 pkg.newVersion = newVersion;
             }
         }
