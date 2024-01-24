@@ -20,7 +20,7 @@ export default {
                 continue;
             }
 
-            const packageRules = global.versionRules[pkg.name] ?? local.versionRules[pkg.name];
+            const packageRules = global.versionRules[pkg.name] ?? local.versionRules[pkg.name] ?? {};
             if (packageRules.copyFrom) {
                 log.info(`Copy version rule found`, `packageName`, pkg.name, `copyFrom`, packageRules.copyFrom)
                 const theirPackage = sharedInformation.packages[packageRules.copyFrom];
