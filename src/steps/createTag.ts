@@ -9,6 +9,11 @@ export default {
 
         log.settings.scope = 'CREATE_TAG'
 
+        if (!sharedInformation.releaseConfig.useTags) {
+            log.warn(`Skipping tag creation`, 'reason', 'useTags is set to "false"')
+            return true;
+        }
+
         for (const pkg of Object.values(sharedInformation.packages)) {
             log.info(`Creating tag`, 'packageName', pkg.name);
             const git = new Git(sharedInformation.githubUrl);
