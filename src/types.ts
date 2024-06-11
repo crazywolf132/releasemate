@@ -73,6 +73,12 @@ export type Config = {
     /** Name of the base git branch */
     baseBranchName: string;
 
+    /** Workspace packages to ignore */
+    ignore?: string[];
+
+    /** Use tags to determine the version */
+    useTags?: boolean;
+
     /** System rules */
     rules: {
         "*": globalRules;
