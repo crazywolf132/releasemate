@@ -7,15 +7,17 @@ import createTag from "./createTag";
 import deepLinkPackages from "./deepLinkPackages";
 import findConfig from "./findConfig";
 import findPackages from "./findPackages";
+import gitLogin from './gitLogin';
 import githubComment from "./githubComment";
 import performBump from "./performBump";
 import performVersionRules from "./performVersionRules";
 import publishPackage from "./publishPackage";
 import readCommits from "./readCommits";
-import gitLogin from './gitLogin'
+import validateConfig from "./validateConfig";
 
 export default [
     findConfig, // Finds the release config
+    validateConfig, // Validates the config
     findPackages, // Finds the packages to release
     deepLinkPackages, // Gets the dependency tree for the packages
     gitLogin, // Logs into git

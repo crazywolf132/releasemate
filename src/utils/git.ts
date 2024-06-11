@@ -61,6 +61,18 @@ export class Git {
         return tags.filter(Boolean)
     }
 
+    // Get last release commit
+    getLastReleaseCommit(): Record<string, string> {
+        const commitMessage = this.runGitCommand(`log --grep="chore: release" --pretty=format:"%B" -n 1`).trim();
+        const commitMap: Record<string, string> = {};
+        const commitEntries = commitMessage.split("\n");
+        commitEntries.forEach((entry) => {
+            const [packageName, version] = entry.split(": v");
+            commitMap[packageName.trim().replace(' -', '')] = version.trim();
+        });
+        return commitMap;
+    }
+
     // Git add
     add(path: string = "."): void {
         this.runGitCommand(`add ${path}`);
@@ -68,7 +80,7 @@ export class Git {
 
     private runGitCommand(command: string): string {
         try {
-            return execSync(`git ${command}`, { encoding: 'utf8' }).trim();
+            return execSync(`git ${command}`, { encoding: 'utf8'}).trim();
         } catch (error: unknown) {
             throw new Error(`Git command failed: ${command}\n${(error as Error).message}`);
         }
