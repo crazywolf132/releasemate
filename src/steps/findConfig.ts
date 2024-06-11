@@ -1,6 +1,7 @@
 import type { Step } from "@types";
 import { ep } from "@utils";
-import { existsSync } from "fs-extra";
+import { existsSync, readFileSync } from "fs-extra";
+import yaml from 'js-yaml';
 import log from 'volog';
 import { readConfig } from "../utils/readConfig";
 
@@ -51,10 +52,24 @@ export default {
                 } else {
                     sharedInformation.monoRepoPackages = [];
                 }
+
+                // One last check is to see if there is a `pnpm-workspace.yaml` file.
+                if (existsSync(ep('pnpm-workspace.yaml'))) {
+                    sharedInformation.isMonoRepo = true;
+                    const workspaces = yaml.load(readFileSync(ep('pnpm-workspace.yaml'), 'utf-8')) as any;
+                    sharedInformation.monoRepoPackages = workspaces.packages ?? [];
+                }
             } else {
                 // We need to throw an error... We cannot find where the package.json is
                 log.error(`Cannot find package.json`, 'path', ep('package.json'));
                 return false
+            }
+        }
+
+        if (sharedInformation.isMonoRepo) {
+            if (sharedInformation.releaseConfig.ignore) {
+                log.warn(`Ignoring packages`, 'reason', 'ignore property in config')
+                sharedInformation.monoRepoPackages = sharedInformation.monoRepoPackages.filter(pkg => !sharedInformation.releaseConfig.ignore!.includes(pkg));
             }
         }
 
