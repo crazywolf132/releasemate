@@ -14,7 +14,7 @@ export default {
         const local = rules[sharedInformation.releaseType] ?? {};
 
         for (const pkg of Object.values(sharedInformation.packages)) {
-            if ("versionRules" in global || "versionRules" in local) {
+            if (("versionRules" in global && pkg.name in global.versionRules) || ("versionRules" in local && pkg.name in local.versionRules)) {
                 log.info(`Found rules for package`, `packageName`, pkg.name);
             } else {
                 continue;
